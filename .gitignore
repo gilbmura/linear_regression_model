@@ -1,0 +1,8 @@
+# Python
+summative/.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Data uploaded at runtime through the /retrain endpoint
+summative/API/data/uploads/

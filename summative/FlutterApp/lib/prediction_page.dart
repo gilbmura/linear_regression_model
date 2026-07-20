@@ -132,7 +132,7 @@ class _PredictionPageState extends State<PredictionPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Regression Predictor'),
+        title: const Text('JAMB Score Predictor'),
         centerTitle: true,
         backgroundColor: theme.colorScheme.primaryContainer,
       ),
@@ -149,7 +149,8 @@ class _PredictionPageState extends State<PredictionPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Enter the values below and press Predict.',
+                      'Enter the student\'s details below and press Predict '
+                      'to estimate their JAMB UTME score (0 – 400).',
                       style: theme.textTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -169,8 +170,8 @@ class _PredictionPageState extends State<PredictionPage> {
                         decoration: InputDecoration(
                           labelText: field.label,
                           hintText: field.hint,
-                          helperText:
-                              'Range: ${_fmt(field.min)} – ${_fmt(field.max)}',
+                          helperText: field.help,
+                          helperMaxLines: 2,
                         ),
                         validator: (value) => _validate(field, value),
                       ),
