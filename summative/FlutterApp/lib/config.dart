@@ -6,9 +6,9 @@
 library;
 
 /// Base URL of the FastAPI service (no trailing slash).
-/// 10.0.2.2 reaches the host machine from the Android emulator.
-/// Replace with the deployed Render URL, e.g. https://my-api.onrender.com
-const String apiBaseUrl = 'http://10.0.2.2:8000';
+/// Production API deployed on Render. For local development against a local
+/// server from the Android emulator, use 'http://10.0.2.2:8000'.
+const String apiBaseUrl = 'https://jamb-predictor-api.onrender.com';
 
 /// Path of the prediction endpoint.
 const String predictPath = '/predict';

@@ -20,9 +20,12 @@ The best model by test MSE (Linear Regression, test RMSE ≈ 39.6 points) is sav
 
 ## Public API (Swagger UI)
 
-- **Swagger UI:** https://TODO-your-app.onrender.com/docs  <!-- TODO: replace after Render deployment -->
-- **Prediction endpoint:** `POST https://TODO-your-app.onrender.com/predict`
-- **Retraining endpoint:** `POST https://TODO-your-app.onrender.com/retrain` (upload a CSV of new observations; the model retrains and hot-swaps if it performs at least as well)
+- **Swagger UI:** https://jamb-predictor-api.onrender.com/docs
+- **Prediction endpoint:** `POST https://jamb-predictor-api.onrender.com/predict`
+- **Retraining endpoint:** `POST https://jamb-predictor-api.onrender.com/retrain` (upload a CSV of new observations; the model retrains and hot-swaps if it performs at least as well)
+
+> Note: the API runs on Render's free tier, which sleeps after ~15 minutes of inactivity — the
+> first request after a pause can take up to a minute while the service wakes up.
 
 Example request body for `/predict`:
 
