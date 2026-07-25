@@ -106,9 +106,22 @@ class StudentInput(BaseModel):
         ..., ge=0, le=1, description="Attends extra tutorials: 0=No, 1=Yes",
         json_schema_extra={"example": 1},
     )
-    access_to_learning_materials: int = Field(
-        ..., ge=0, le=1, description="Has access to learning materials: 0=No, 1=Yes",
+    parent_education_level: int = Field(
+        ..., ge=0, le=3,
+        description="Parent education: 0=None, 1=Primary, 2=Secondary, 3=Tertiary",
+        json_schema_extra={"example": 2},
+    )
+    assignments_completed: int = Field(
+        ..., ge=0, le=5, description="Assignments completed (0-5)",
+        json_schema_extra={"example": 2},
+    )
+    socioeconomic_status: int = Field(
+        ..., ge=0, le=2, description="Socioeconomic status: 0=Low, 1=Medium, 2=High",
         json_schema_extra={"example": 1},
+    )
+    school_type: int = Field(
+        ..., ge=0, le=1, description="School type: 0=Public, 1=Private",
+        json_schema_extra={"example": 0},
     )
 
     def to_feature_row(self, feature_order: list[str]) -> pd.DataFrame:
@@ -120,7 +133,10 @@ class StudentInput(BaseModel):
             "Parent_Involvement": self.parent_involvement,
             "IT_Knowledge": self.it_knowledge,
             "Extra_Tutorials": self.extra_tutorials,
-            "Access_To_Learning_Materials": self.access_to_learning_materials,
+            "Parent_Education_Level": self.parent_education_level,
+            "Assignments_Completed": self.assignments_completed,
+            "Socioeconomic_Status": self.socioeconomic_status,
+            "School_Type": self.school_type,
         }
         return pd.DataFrame([[values[f] for f in feature_order]], columns=feature_order)
 
@@ -162,20 +178,22 @@ def predict(student: StudentInput) -> PredictionResponse:
     )
 
 
+def _read_raw_csv(path) -> pd.DataFrame:
+    # keep_default_na=False: the "None" category in Parent_Education_Level is
+    # real data (no formal education), not a missing-value marker.
+    return pd.read_csv(path, keep_default_na=False, na_values=[])
+
+
 def _load_training_frame() -> pd.DataFrame:
     """Base dataset plus every accepted upload."""
-    frames = [pd.read_csv(BASE_DATA_PATH)]
+    frames = [_read_raw_csv(BASE_DATA_PATH)]
     if UPLOADS_DIR.exists():
-        frames += [pd.read_csv(p) for p in sorted(UPLOADS_DIR.glob("*.csv"))]
+        frames += [_read_raw_csv(p) for p in sorted(UPLOADS_DIR.glob("*.csv"))]
     return pd.concat(frames, ignore_index=True)
 
 
 def _prepare_xy(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.Series]:
     df = df.copy()
-    if "Parent_Education_Level" in df.columns and df["Parent_Education_Level"].isna().any():
-        df["Parent_Education_Level"] = df["Parent_Education_Level"].fillna(
-            df["Parent_Education_Level"].mode()[0]
-        )
     for col, mapping in {**_artifact["ordinal_maps"], **_artifact["binary_maps"]}.items():
         if col in df.columns and not pd.api.types.is_numeric_dtype(df[col]):
             df[col] = df[col].map(mapping)
@@ -215,7 +233,7 @@ async def retrain(file: UploadFile = File(...)) -> RetrainResponse:
     upload_path.write_bytes(content)
 
     try:
-        new_rows = pd.read_csv(upload_path)
+        new_rows = _read_raw_csv(upload_path)
         _prepare_xy(new_rows)  # validate the upload on its own before training
         full = _load_training_frame()
         X, y = _prepare_xy(full)

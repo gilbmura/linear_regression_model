@@ -16,7 +16,7 @@ so schools and students can identify risk early and act (extra tutorials, attend
 The full analysis (visualizations, feature engineering, standardization, and a comparison of
 SGD linear regression, OLS linear regression, decision tree and random forest) is in
 [`summative/linear_regression/multivariate.ipynb`](summative/linear_regression/multivariate.ipynb).
-The best model by test MSE (Linear Regression, test RMSE ≈ 39.6 points) is saved and served by the API.
+The best model by test MSE (Linear Regression, test RMSE ≈ 39.1 points) is saved and served by the API.
 
 ## Public API (Swagger UI)
 
@@ -38,7 +38,10 @@ Example request body for `/predict`:
   "parent_involvement": 1,
   "it_knowledge": 1,
   "extra_tutorials": 1,
-  "access_to_learning_materials": 1
+  "parent_education_level": 2,
+  "assignments_completed": 2,
+  "socioeconomic_status": 1,
+  "school_type": 0
 }
 ```
 
@@ -109,7 +112,7 @@ flutter pub get
 flutter run          # select your emulator/device when prompted
 ```
 
-The app shows 8 input fields (one per model feature), a **Predict** button, and a display area
+The app shows 11 input fields (one per model feature), a **Predict** button, and a display area
 that shows the predicted JAMB score or a clear error message for missing/out-of-range values.
 The API base URL lives in `lib/config.dart` (`apiBaseUrl`) — it defaults to `http://10.0.2.2:8000`
 (local API from the Android emulator) and should be switched to the Render URL for production use.

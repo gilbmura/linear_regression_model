@@ -34,7 +34,7 @@ class InputFieldSpec {
   });
 }
 
-/// One entry per model input variable (8 features).
+/// One entry per model input variable (11 features).
 const List<InputFieldSpec> inputFields = [
   InputFieldSpec(
     key: 'study_hours_per_week',
@@ -97,10 +97,37 @@ const List<InputFieldSpec> inputFields = [
     isInteger: true,
   ),
   InputFieldSpec(
-    key: 'access_to_learning_materials',
-    label: 'Learning materials access (0 or 1)',
+    key: 'parent_education_level',
+    label: 'Parent education level (0–3)',
+    hint: 'e.g. 2',
+    help: '0 = None, 1 = Primary, 2 = Secondary, 3 = Tertiary',
+    min: 0,
+    max: 3,
+    isInteger: true,
+  ),
+  InputFieldSpec(
+    key: 'assignments_completed',
+    label: 'Assignments completed (0–5)',
+    hint: 'e.g. 2',
+    help: 'Number of assignments completed (0 – 5)',
+    min: 0,
+    max: 5,
+    isInteger: true,
+  ),
+  InputFieldSpec(
+    key: 'socioeconomic_status',
+    label: 'Socioeconomic status (0–2)',
     hint: 'e.g. 1',
-    help: '0 = No access, 1 = Has access to learning materials',
+    help: '0 = Low, 1 = Medium, 2 = High',
+    min: 0,
+    max: 2,
+    isInteger: true,
+  ),
+  InputFieldSpec(
+    key: 'school_type',
+    label: 'School type (0 or 1)',
+    hint: 'e.g. 0',
+    help: '0 = Public school, 1 = Private school',
     min: 0,
     max: 1,
     isInteger: true,
