@@ -58,7 +58,7 @@ The API restricts cross-origin access instead of allowing `*`:
 
 ## Video Demo
 
-- **YouTube:** https://TODO-youtube-link  <!-- TODO: replace after recording -->
+- **YouTube:** https://www.youtube.com/watch?v=xjrWaRj3NUY  
 
 ## Repository structure
 
