@@ -1,4 +1,4 @@
-# JAMB Score Predictor — Regression Analysis Mobile Application
+# JAMB Score Predictor Regression Analysis Mobile Application
 
 ## Mission and Problem
 
@@ -6,6 +6,10 @@ My mission is to improve education outcomes in Africa through data-driven early 
 Every year over 1.5 million Nigerian students sit the JAMB UTME university-entrance exam, and most discover too late that they are below the cut-off for their dream course.
 This project predicts a student's JAMB score (0–400) from study habits, school characteristics and socioeconomic factors,
 so schools and students can identify risk early and act (extra tutorials, attendance support, learning materials) **before** the real exam.
+
+## Video Demo
+
+- **YouTube:** https://www.youtube.com/watch?v=xjrWaRj3NUY
 
 ## Dataset
 
@@ -55,10 +59,7 @@ The API restricts cross-origin access instead of allowing `*`:
 - **Allowed methods:** `GET`, `POST`, `OPTIONS` only — no endpoint uses PUT/DELETE, so they stay blocked.
 - **Allowed headers:** `Content-Type` only, which is all the JSON/multipart requests need.
 - **Credentials:** disabled — the API is stateless with no cookies or sessions, so credentialed cross-origin requests are refused.
-
-## Video Demo
-
-- **YouTube:** https://www.youtube.com/watch?v=xjrWaRj3NUY  
+  
 
 ## Repository structure
 
